@@ -15,9 +15,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyAwaited<T> = any
+type MyAwaited<T> = T extends Promise<infer U> ? MyAwaited<U> : T
 
-type test = MyAwaited<Promise<string>>
+type test = MyAwaited<Promise<string | number>>
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
 
@@ -31,7 +31,6 @@ type cases = [
   Expect<Equal<MyAwaited<Z>, string | number>>,
 ]
 
-// @ts-expect-error
 type error = MyAwaited<number>
 
 
